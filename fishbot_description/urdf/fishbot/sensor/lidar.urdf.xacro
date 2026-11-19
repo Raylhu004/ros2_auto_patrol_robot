@@ -1,0 +1,109 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro">
+    <xacro:include filename="$(find fishbot_description)/urdf/fishbot/common_inertia.xacro"/>
+
+    <xacro:macro name="lidar_xacro" params="xyz">
+        <!-- lidar部件支撑杆 -->
+        <link name="bar_link">
+            <!-- 部件的外观描述 -->
+            <visual>
+                <!-- 描述1：坐标系原点：沿着自己几何中心的偏移和旋转 -->
+                <origin xyz="0.0 0.0 0.0" rpy="0.0 0.0 0.0"/>
+
+                <!-- 描述2：几何形状 -->
+                <geometry>
+                    <!-- 正方体 半径0.2m 高度0.12m -->
+                    <cylinder radius="0.01" length="0.10"/>
+                </geometry>
+
+                <!-- 描述3：材质颜色 -->
+                <material name="black">
+                    <color rgba="0.0 0.0 0.0 1.0"/>
+                </material>
+            </visual>
+
+            <collision>
+                <!-- 描述1：坐标系原点：沿着自己几何中心的偏移和旋转 -->
+                <origin xyz="0.0 0.0 0.0" rpy="0.0 0.0 0.0"/>
+
+                <!-- 描述2：几何形状 -->
+                <geometry>
+                    <!-- 正方体 半径0.2m 高度0.12m -->
+                    <cylinder radius="0.01" length="0.10"/>
+                </geometry>
+
+                <!-- 描述3：材质颜色 -->
+                <material name="black">
+                    <color rgba="0.0 0.0 0.0 1.0"/>
+                </material>
+            </collision>
+            <xacro:cylinder_inertia m="0.1" r="0.01" h="0.1"/>
+        </link>
+
+        <!-- 机器人的lidar部件 -->
+        <link name="lidar_link">
+            <!-- 部件的外观描述 -->
+            <visual>
+                <!-- 描述1：坐标系原点：沿着自己几何中心的偏移和旋转 -->
+                <origin xyz="0.0 0.0 0.0" rpy="0.0 0.0 0.0"/>
+
+                <!-- 描述2：几何形状 -->
+                <geometry>
+                    <!-- 正方体 半径0.2m 高度0.12m -->
+                    <cylinder radius="0.02" length="0.02"/>
+                </geometry>
+
+                <!-- 描述3：材质颜色 -->
+                <material name="black">
+                    <color rgba="0.0 0.0 0.0 1.0"/>
+                </material>
+            </visual>
+
+            <collision>
+                <!-- 描述1：坐标系原点：沿着自己几何中心的偏移和旋转 -->
+                <origin xyz="0.0 0.0 0.0" rpy="0.0 0.0 0.0"/>
+
+                <!-- 描述2：几何形状 -->
+                <geometry>
+                    <!-- 正方体 半径0.2m 高度0.12m -->
+                    <cylinder radius="0.02" length="0.02"/>
+                </geometry>
+
+                <!-- 描述3：材质颜色 -->
+                <material name="black">
+                    <color rgba="0.0 0.0 0.0 1.0"/>
+                </material>
+            </collision>
+            <xacro:cylinder_inertia m="0.1" r="0.02" h="0.02"/>
+
+
+        </link>
+
+        <!-- 机器人的关节 -->
+        <joint name="lidar_joint" type="fixed">
+            <origin xyz="0.0 0.0 0.05" rpy="0.0 0.0 0.0"/>
+            <parent link="bar_link"/>
+            <child link="lidar_link"/>
+            <!-- <axis xyz="0.0 0.0 0.0"/> -->
+            <!-- <limit lower="0.0" upper="0.0" effort="0.0" velocity="0.0"/> -->
+        </joint>
+
+        <joint name="bar_joint" type="fixed">
+            <origin xyz="${xyz}" rpy="0.0 0.0 0.0"/>
+            <parent link="base_link"/>
+            <child link="bar_link"/>
+            <!-- <axis xyz="0.0 0.0 0.0"/> -->
+            <!-- <limit lower="0.0" upper="0.0" effort="0.0" velocity="0.0"/> -->
+        </joint>
+
+        <gazebo reference="bar_link">
+            <material> Gazebo/Black</material>
+        </gazebo>
+
+        <gazebo reference="lidar_link">
+            <material> Gazebo/Black</material>
+        </gazebo>
+
+    </xacro:macro>
+
+</robot>
